@@ -47,28 +47,40 @@ string getAlgoName(int algo_id) {
 	{
 	case 0:
 		return "Selection Sort";
+		break;
 	case 1:
 		return "Insertion Sort";
+		break;
 	case 2:
 		return "Bubble Sort";
+		break;
 	case 3:
 		return "Shaker Sort";
+		break;
 	case 4:
 		return "Shell Sort";
+		break;
 	case 5:
 		return "Heap Sort";
+		break;
 	case 6:
 		return "Merge Sort";
+		break;
 	case 7:
 		return "Quick Sort";
+		break;
 	case 8:
 		return "Counting Sort";
+		break;
 	case 9:
 		return "Radix Sort";
+		break;
 	case 10:
 		return "Flash Sort";
+		break;
 	default:
 		return "Invalid algorithm id";
+		break;
 	}
 }
 
