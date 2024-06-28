@@ -126,3 +126,122 @@ string getInputOrder(const std::string& input_order_cmd) {
 		return "Invalid input order cmd name";
 	}
 }
+void Command1(char* algo_name, char* input_filename, char* output_param)
+{
+    cout << "Algorithm Mode" << endl;
+    int algo_id = getAlgoId(algo_name);
+    cout << "Algorithms: " << getAlgoName(algo_id) << endl;
+    cout << "Input file: " << input_filename << endl;
+
+    ifstream fread;
+    fread.open(input_filename, ios::in);
+    if (fread.is_open())
+    {
+        int size;
+        unsigned long long NumComp;
+        int* arr, * DataSet;
+        fread >> size;
+        cout << "Input Size: " << size << endl;
+        cout << "------------------------------" << endl;
+
+        DataSet = new int[size];
+        for (int count = 0;count < size;count++)
+        {
+            fread >> DataSet[count];
+        }
+        arr = copyFromDataSet(DataSet, size);
+
+        clock_t start, end;
+        start = clock();
+        SORT_ALGO(arr, size, NumComp, algo_id);
+        end = clock();
+        double run_time = double(end - start) / double(CLOCKS_PER_SEC);
+
+        if (strcmp(output_param, "-time") == 0)
+        {
+            cout << "Running time (if required): " << fixed << run_time / 1000000 << setprecision(5) << "ms" << endl;
+        }
+        else if (strcmp(output_param, "-comp") == 0)
+        {
+            cout << "Comparisons (if required): " << NumComp << endl;
+        }
+        else
+        {
+            cout << "Running time (if required): " << fixed << run_time / 1000000 << setprecision(5) << "ms" << endl;
+            cout << "Comparisons (if required): " << NumComp << endl;
+        }
+        fread.close();
+
+        //Write down the sorted array to to "output.txt" file
+        ofstream fwrite;
+        fwrite.open("output.txt", ios::out);
+        if (fwrite.is_open())
+        {
+            fwrite << size << endl;
+            for (int count = 0; count < size; count++)
+            {
+                fwrite << arr[count] << " ";
+            }
+            fwrite.close();
+        }
+        else
+        {
+            cout << "Can not open and write file!" << endl;
+        }
+        free(arr);
+    }
+    else
+        cout << "Can not open àn read file!" << endl;
+}
+
+
+void Command4(char* algo_name1, char* algo_name2, char* input_filename)
+{
+    cout << "COMPARE MODE" << endl;
+    int algo_id1 = getAlgoId(algo_name1);
+    int algo_id2 = getAlgoId(algo_name2);
+
+    cout << "Algorithm: " << getAlgoName(algo_id1) << " | " << getAlgoName(algo_id2)<<endl;
+    cout << "Input file" << input_filename << endl;
+
+    ifstream fread;
+    fread.open(input_filename, ios::in);
+    if (fread.is_open())
+    {
+        int size, * arr1, * arr2, * DataSet;
+        unsigned long long NumComp1, NumComp2;
+
+        fread >> size;
+        cout << "Input size: " << size << endl;
+        cout << "-----------------------------" << endl;
+
+        DataSet = new int[size];
+        for (int count = 0; count < size; count++)
+        {
+            fread >> DataSet[count];
+        }
+        arr1 = copyFromDataSet(DataSet, size);
+        arr2 = copyFromDataSet(DataSet, size);
+
+        clock_t start1, end1, start2, end2;
+
+        start1 = clock();
+        SORT_ALGO(arr1, size, NumComp1, algo_id1);
+        end1 = clock();
+        double run_time1 = double(end1 - start1) / double(CLOCKS_PER_SEC);
+
+        start2 = clock();
+        SORT_ALGO(arr2, size, NumComp2, algo_id2);
+        end2 = clock();
+        double run_time2 = double(end2 -start2)  / double(CLOCKS_PER_SEC);
+
+        cout << "Running time: " << fixed << run_time1 / 1000000 << setprecision(5) << "ms" << " | " << fixed << run_time2 / 1000000 << setprecision(5) << "ms" << endl;
+        cout << "Comparisons: " << NumComp1 << " | " << NumComp2 << endl;
+        free(arr1);
+        free(arr2);
+    }
+    else
+    {
+        cout << "Can not open and read file! " << endl;
+    }
+}
