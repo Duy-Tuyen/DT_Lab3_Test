@@ -1,44 +1,32 @@
 #pragma once
-
 #include <iostream>
+#include "vector"
 
-#define MAX_VAL 500001 //used in CountingSort and RadixSort
+void SelectionSort(int* a, int n, unsigned long long& NumComp);
 
-//Function prototypes for each sorting algorithm goes here
-//1. SelectionSort
-void SelectionSort(int* a, int n, unsigned long long& num_Comp);
+void InsertionSort(int* a, int n, unsigned long long& NumComp);
 
-//2. InsertionSort
-void InsertionSort(int* a, int n, unsigned long long& num_Comp);
+void BubbleSort(int* a, int n, unsigned long long& NumComp);
+void BubbleSort_Flag(int* a, int n, unsigned long long& NumComp);
 
-//3. BubbleSort
-void BubbleSort(int* a, int n, unsigned long long& num_Comp);
-// BubbleSort_with_flag 
+void ShakerSort(int* a, int n, unsigned long long& NumComp);
 
-//4. HeapSort
-void HeapSort(int* a, int n, unsigned long long& num_Comp);
-// HeapConstruct, HeapRebuild 
+void ShellSort(int* a, int n, unsigned long long& NumComp);
 
+void MaxHeapify(int* a, int n, int i, unsigned long long& NumComp);
+void HeapSort(int* a, int n, unsigned long long& NumComp);
 
-//5. MergeSort
-void MergeSort(int* a, int n, unsigned long long& num_Comp);
-// MergeRun, Sort_on_Run 
+void Merge(int* a, int first, int mid, int last, unsigned long long& NumComp);
+void SplitMS(int* a, int first, int last, unsigned long long& NumComp);
+void MergeSort(int* a, int n, unsigned long long& NumComp);
 
-//6. QuickSort
-void QuickSort(int* a, int n, unsigned long long& num_Comp);
+int Partition(int* a, int first, int last, unsigned long long& NumComp);
+void QS_Recursion(int* a, int left, int right, unsigned long long& num_Comp);
+void QuickSort(int* a, int n, unsigned long long& NumComp);
 
-//7. RadixSort
-void RadixSort(int* a, int n, unsigned long long& num_Comp);
+void CountingSort(int* a, int n, unsigned long long& NumComp);
 
-//8. ShakerSort
-void ShakerSort(int* a, int n, unsigned long long& num_Comp);
+int GetMax(int* a, int n, unsigned long long& NumComp);
+void RadixSort(int* a, int n, unsigned long long& NumComp);
 
-//9. ShellSort
-void ShellSort(int* a, int n, unsigned long long& num_Comp);
-
-//10. CountingSort
-void CountingSort(int* a, int n, unsigned long long& num_Comp);
-
-//11. FlashSort
-void FlashSort(int* a, int n, unsigned long long& num_Comp);
-// FlashInsertionSort, GetClass, ClassPermute, ClassSort, Classify
+void FlashSort(int* a, int n, unsigned long long& NumComp);
