@@ -126,6 +126,16 @@ string getInputOrder(const std::string& input_order_cmd) {
 		return "Invalid input order cmd name";
 	}
 }
+
+int* CopyData(int* a, int size)
+{
+    int* Data = new int[size];
+    for (int i = 0; i < size; i++)
+        Data[i] = a[i];
+
+    return Data;
+}
+
 void Command1(char* algo_name, char* input_filename, char* output_param)
 {
     cout << "Algorithm Mode" << endl;
@@ -139,17 +149,17 @@ void Command1(char* algo_name, char* input_filename, char* output_param)
     {
         int size;
         unsigned long long NumComp;
-        int* arr, * DataSet;
+        int* arr;
+	    
         fread >> size;
         cout << "Input Size: " << size << endl;
         cout << "------------------------------" << endl;
 
-        DataSet = new int[size];
-        for (int count = 0;count < size;count++)
-        {
-            fread >> DataSet[count];
+        arr = new int[size];
+        for (int count = 0;count < size;count++) 
+	{
+            fread >> arr[count];
         }
-        arr = copyFromDataSet(DataSet, size);
 
         clock_t start, end;
         start = clock();
@@ -157,8 +167,8 @@ void Command1(char* algo_name, char* input_filename, char* output_param)
         end = clock();
         double run_time = double(end - start) / double(CLOCKS_PER_SEC);
 
-        if (strcmp(output_param, "-time") == 0)
-        {
+        if (strcmp(output_param, "-time") == 0) 
+	{
             cout << "Running time (if required): " << fixed << run_time / 1000000 << setprecision(5) << "ms" << endl;
         }
         else if (strcmp(output_param, "-comp") == 0)
@@ -188,12 +198,11 @@ void Command1(char* algo_name, char* input_filename, char* output_param)
         {
             cout << "Can not open and write file!" << endl;
         }
-        free(arr);
+        delete[] arr;
     }
     else
         cout << "Can not open àn read file!" << endl;
 }
-
 
 void Command4(char* algo_name1, char* algo_name2, char* input_filename)
 {
@@ -208,20 +217,20 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename)
     fread.open(input_filename, ios::in);
     if (fread.is_open())
     {
-        int size, * arr1, * arr2, * DataSet;
+        int size, * arr1, * arr2;
         unsigned long long NumComp1, NumComp2;
 
         fread >> size;
         cout << "Input size: " << size << endl;
         cout << "-----------------------------" << endl;
 
-        DataSet = new int[size];
+        arr1 = new int[size];
+        arr2 = new int[size];
         for (int count = 0; count < size; count++)
         {
-            fread >> DataSet[count];
+            fread >> arr1[count];
         }
-        arr1 = copyFromDataSet(DataSet, size);
-        arr2 = copyFromDataSet(DataSet, size);
+        arr2 = CopyData(arr2, size);
 
         clock_t start1, end1, start2, end2;
 
@@ -237,8 +246,8 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename)
 
         cout << "Running time: " << fixed << run_time1 / 1000000 << setprecision(5) << "ms" << " | " << fixed << run_time2 / 1000000 << setprecision(5) << "ms" << endl;
         cout << "Comparisons: " << NumComp1 << " | " << NumComp2 << endl;
-        free(arr1);
-        free(arr2);
+        delete[] arr1;
+        delete[] arr2;
     }
     else
     {
