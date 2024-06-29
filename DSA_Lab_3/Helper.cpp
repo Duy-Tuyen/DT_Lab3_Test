@@ -207,7 +207,7 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 {
 	if (strcmp(output_param, "-time") == 0)
 	{
-		cout << "Running time (if required): " << fixed << run_time / 1000000 << setprecision(5) << "ms" << endl;
+		cout << "Running time (if required): " << fixed << run_time / 1000 << setprecision(5) << " millisecs" << endl;
 	}
 	else if (strcmp(output_param, "-comp") == 0)
 	{
@@ -215,7 +215,7 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 	}
 	else
 	{
-		cout << "Running time (if required): " << fixed << run_time / 1000000 << setprecision(5) << "ms" << endl;
+		cout << "Running time (if required): " << fixed << run_time / 1000 << setprecision(5) << " millisecs" << endl;
 		cout << "Comparisons (if required): " << NumComp << endl;
 	}
 }
