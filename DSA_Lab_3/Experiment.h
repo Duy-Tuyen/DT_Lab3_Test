@@ -14,6 +14,7 @@
 
 
 using namespace std;
+const int SIZE[6] = {10000,30000,50000,100000, 500000};
 
 // Command 1
 // Command line arguments: <algorithm> <input_file> <output_param>
@@ -44,3 +45,5 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename);
 // Run 2 sorting algorithms with the generated data of the given size and input order to compare their performance
 // Result: Print both time and comparisons count of 2 algo to console and write the sorted array to "output.txt" file
 void Command5(char* algo1_name, char* algo2_name, int size, char* input_order);
+
+void Experiment();
