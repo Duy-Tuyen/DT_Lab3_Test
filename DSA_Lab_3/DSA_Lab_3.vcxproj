@@ -129,7 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Algorithms.cpp" />
     <ClCompile Include="DataGenerator.cpp" />
-    <ClCompile Include="DSA_Lab_3.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Experiment.cpp" />
     <ClCompile Include="Helper.cpp" />
   </ItemGroup>
