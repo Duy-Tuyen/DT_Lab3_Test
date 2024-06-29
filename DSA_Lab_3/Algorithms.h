@@ -20,6 +20,7 @@ void Merge(int* a, int first, int mid, int last, unsigned long long& NumComp);
 void SplitMS(int* a, int first, int last, unsigned long long& NumComp);
 void MergeSort(int* a, int n, unsigned long long& NumComp);
 
+int Sort_First_Middle_Last(int* a, int left, int right, unsigned long long& NumComp);
 int Partition(int* a, int first, int last, unsigned long long& NumComp);
 void QS_Recursion(int* a, int left, int right, unsigned long long& num_Comp);
 void QuickSort(int* a, int n, unsigned long long& NumComp);
