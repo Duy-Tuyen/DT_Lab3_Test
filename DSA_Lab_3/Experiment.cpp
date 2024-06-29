@@ -7,7 +7,8 @@
 void Command1(char* algo_name, char* input_filename, char* output_param)
 {
 	// Print out the information of cmd1 experiment
-    cout << "Algorithm Mode" << endl;
+    cout << "Command 1" << endl;
+
     int algo_id = getAlgoId(algo_name);
 
     cout << "Algorithms: " << getAlgoName(algo_id) << endl;
@@ -57,7 +58,8 @@ void Command1(char* algo_name, char* input_filename, char* output_param)
 void Command2(char* algo_name, int size, char* input_order, char* output_param)
 {
 	// Print out the information of cmd2 experiment
-	cout << "Algorithm mode" << endl;
+    cout << "Command 2" << endl;
+
 	int algo_id = getAlgoId(algo_name);
 	int input_order_id = getInputOrderId(input_order);
 	cout << "Algorithm: " << getAlgoName(algo_id) << endl;
@@ -92,7 +94,8 @@ void Command2(char* algo_name, int size, char* input_order, char* output_param)
 // Result: Print time or comparisons count to console and write the sorted array to "output.txt" file
 void Command3(char* algo_name, int size, char* output_param) {
 	// Print out the information of cmd3 experiment
-	cout << "Algorithm mode" << endl;
+    cout << "Command 3" << endl;
+
 	int algo_id = getAlgoId(algo_name);
 	int input_order_id;
 	cout << "Algorithm: " << getAlgoName(algo_id) << endl;
@@ -128,7 +131,8 @@ void Command3(char* algo_name, int size, char* output_param) {
 // Result: Print both time and comparisons count of 2 algo to console and write the sorted array to "output.txt" file
 void Command4(char* algo_name1, char* algo_name2, char* input_filename)
 {
-    cout << "COMPARE MODE" << endl;
+    cout << "Command 4" << endl;
+
     int algo_id1 = getAlgoId(algo_name1);
     int algo_id2 = getAlgoId(algo_name2);
 
@@ -189,7 +193,8 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename)
 // Result: Print both time and comparisons count of 2 algo to console and write the sorted array to "output.txt" file
 void Command5(char* algo1_name, char* algo2_name, int size, char* input_order)
 {
-	cout << "COMPARE MODE" << endl;
+    cout << "Command 5" << endl;
+
 	int algo_id1 = getAlgoId(algo1_name);
 	int algo_id2 = getAlgoId(algo2_name);
 	int input_order_id = getInputOrderId(input_order);
