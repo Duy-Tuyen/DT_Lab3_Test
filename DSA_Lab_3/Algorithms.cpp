@@ -306,7 +306,7 @@ void QS_Recursion(int* a, int left, int right, unsigned long long& NumComp)
 void QuickSort(int* a, int n, unsigned long long& NumComp)
 {
 	NumComp = 0;
-	Qs_recursion(a, 0, n - 1, NumComp);
+	QS_Recursion(a, 0, n - 1, NumComp);
 }
 
 //9.Counting Sort------------------------------------------------------------------------------------------------//
