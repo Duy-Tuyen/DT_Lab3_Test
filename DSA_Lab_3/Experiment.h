@@ -14,7 +14,7 @@
 
 
 using namespace std;
-const int SIZE[6] = {10000,30000,50000,100000, 500000};
+const int SIZE[5] = {10000,30000,50000,100000, 500000};
 
 // Command 1
 // Command line arguments: <algorithm> <input_file> <output_param>
