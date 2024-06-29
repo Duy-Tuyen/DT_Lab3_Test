@@ -300,7 +300,19 @@ void QS_Recursion(int* a, int left, int right, unsigned long long& NumComp)
 		QS_Recursion(a, pivot + 1, right, NumComp);
 	}
 	else
-		InsertionSort(a + left, right - left + 1, NumComp);
+	{
+		for (int i = left + 1;(++NumComp) && (i < (right - left + 1)); i++)
+		{
+			int key = a[i];
+			int j = i - 1;
+			while ((++NumComp) && (i >= left) && (++NumComp) && (a[j] > key))
+			{
+				a[j + 1] = a[j];
+				j--;
+			}
+			a[j + 1] = key;
+		}
+	}
 }
 
 void QuickSort(int* a, int n, unsigned long long& NumComp)
