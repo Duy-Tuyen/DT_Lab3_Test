@@ -1,6 +1,6 @@
 #include "Helper.h"
 
-// Function to implement sorting algorithms based on algo_id
+//1. Function to implement sorting algorithms based on algo_id
 void SORT_ALGO(int* a, int n, unsigned long long& num_Comp, int algo_id)
 {
 	switch (algo_id)
@@ -43,6 +43,11 @@ void SORT_ALGO(int* a, int n, unsigned long long& num_Comp, int algo_id)
 	}
 }
 
+//-----------------------------------------------------------------------------------------------
+
+
+//2. Functions to convert data type of algorithm and input order
+//
 // Convert algo_id to algorithm name (to print out the result)
 string getAlgoName(int algo_id) {
 	switch (algo_id)
@@ -172,6 +177,10 @@ int* CopyData(int* a, int size)
 	return Data;
 }
 
+//-----------------------------------------------------------------------------------------------
+
+// 3. Functions to print out the result
+// 
 // Print the sorted array to "output.txt" file
 void printToFile(int* a, int size, const char* filename)
 {
@@ -209,4 +218,187 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 		cout << "Running time (if required): " << fixed << run_time / 1000000 << setprecision(5) << "ms" << endl;
 		cout << "Comparisons (if required): " << NumComp << endl;
 	}
+}
+
+//-----------------------------------------------------------------------------------------------
+
+// 4. Functions to check for valid input/file
+bool isValidAlgorithmName(char* algorithm_name)
+{
+	if (strcmp(algorithm_name, "selection-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "insertion-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "bubble-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "heap-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "merge-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "quick-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "radix-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "shaker-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "shell-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "counting-sort") == 0)
+	{
+		return true;
+	}
+	if (strcmp(algorithm_name, "flash-sort") == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool isMeantToBeAlgorithmName(char* algo_name)
+{
+	size_t name_length = strlen(algo_name);
+	size_t suffix_length = strlen("-sort");
+
+	if (name_length >= suffix_length && strcmp(algo_name + name_length - suffix_length, "-sort") == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool endingWithdotTxt(char* filename)
+{
+	const char* dotTxt = ".txt";
+	size_t filename_length = strlen(filename);
+	size_t dotTxt_length = strlen(dotTxt);
+
+	if (filename_length >= dotTxt_length && strcmp(filename + filename_length - dotTxt_length, dotTxt) == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool noIllegalCharacterInFileName(char* filename)
+{
+	const char* illegalCharacters = "<>:\"/\\|?*";
+	int length = strlen(filename);
+
+	for (int i = 0; i < length; i++)
+	{
+		if (strchr(illegalCharacters, filename[i]) != NULL)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool isMeantToBeGivenInputFile(char* filename)
+{
+	return ((endingWithdotTxt(filename)) && (noIllegalCharacterInFileName(filename)));
+}
+
+bool isMeantToBeInputSize(char* filename)
+{
+	int len = strlen(filename);
+
+	if ((int(filename[0]) < 49) || (int(filename[0]) > 57))
+	{
+		return false;
+	}
+
+	for (int i = 1; i < len; i++)
+	{
+		if ((int(filename[i]) < 48) || (int(filename[i]) > 57))
+			return false;
+	}
+
+	return true;
+}
+
+bool isValidInputSize(int size)
+{
+	if ((size >= 1) && (size <= 5000000))
+	{
+		return true;
+	}
+
+	return false;
+}
+int getSize(char* input_size)
+{
+	int size = 0;
+	int len = strlen(input_size);
+
+	for (int i = 0; i < len; i++)
+	{
+		if (input_size[i] >= '0' && input_size[i] <= '9')
+		{
+			size = size * 10 + (input_size[i] - '0');
+		}
+	}
+
+	return size;
+}
+bool isMeantToBeOutputParam(char* output_param)
+{
+	if (strcmp(output_param, "-time") == 0)
+	{
+		return true;
+	}
+	if (strcmp(output_param, "-comp") == 0)
+	{
+		return true;
+	}
+	if (strcmp(output_param, "-both") == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool isMeantToBeInputOrder(char* input_order)
+{
+	if (strcmp(input_order, "-rand") == 0)
+	{
+		return true;
+	}
+	if (strcmp(input_order, "-nsorted") == 0)
+	{
+		return true;
+	}
+	if (strcmp(input_order, "-sorted") == 0)
+	{
+		return true;
+	}
+	if (strcmp(input_order, "-rev") == 0)
+	{
+		return true;
+	}
+
+	return false;
 }
