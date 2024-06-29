@@ -167,8 +167,8 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename)
         double run_time2 = double(end2 -start2)  / double(CLOCKS_PER_SEC);
 
 		// Print out the running time and number of comparisons
-        cout << "Running time: " << fixed << run_time1 / 1000000 << setprecision(5) << "ms" << " | "
-			 << fixed << run_time2 / 1000000 << setprecision(5) << "ms" << endl;
+        cout << "Running time: " << fixed << run_time1 / 1000 << setprecision(5) << " millisecs" << " | "
+			 << fixed << run_time2 / 1000 << setprecision(5) << " millisecs" << endl;
         cout << "Comparisons: " << NumComp1 << " | " << NumComp2 << endl;
 
 		// Write down the sorted array to "output.txt" file
@@ -221,8 +221,8 @@ void Command5(char* algo1_name, char* algo2_name, int size, char* input_order)
 
 
 	// Print out the running time and number of comparisons
-	cout << "Running time: " << fixed << run_time1 / 1000000 << setprecision(5) << "ms" << " | "
-		 << fixed << run_time2 / 1000000 << setprecision(5) << "ms" << endl;
+	cout << "Running time: " << fixed << run_time1 / 1000 << setprecision(5) << " millisecs" << " | "
+		 << fixed << run_time2 / 1000 << setprecision(5) << " millisecs" << endl;
 
 	cout << "Comparisons: " << NumComp1 << " | " << NumComp2 << endl;
 
@@ -231,4 +231,52 @@ void Command5(char* algo1_name, char* algo2_name, int size, char* input_order)
 
 	delete[] arr1;
 	delete[] arr2;
+}
+
+void Experiment()
+{
+    ofstream expiriment_fout;
+    expiriment_fout.open("ExperimentResult.txt");
+    if (expiriment_fout.is_open())
+    {
+        for (int Data_Order = 0; Data_Order < 4; Data_Order++)
+        {
+            expiriment_fout << endl << "DATA ORDER : " << getInputOrder(Data_Order) << endl;
+		
+            for (int Data_Size = 0; Data_Size < 6; Data_Size++)
+            {
+                expiriment_fout << "----DATA SIZE: " << SIZE[Data_Size] << endl;
+                int* data = new int[SIZE[Data_Size]];
+                GenerateData(data, SIZE[Data_Size], Data_Order);
+
+                for (int Sorting_Algorithms_ID = 0; Sorting_Algorithms_ID < 11; Sorting_Algorithms_ID++)
+                {
+                    int* a = CopyData(data, SIZE[Data_Size]);
+                    unsigned long long NumComp = 0;
+
+                    clock_t start, end;
+                    start = clock();
+                    SORT_ALGO(data, SIZE[Data_Size], NumComp, Sorting_Algorithms_ID);
+                    end = clock();
+                    double run_time = double(end - start) / double(CLOCKS_PER_SEC);
+                    double run_time_micro = run_time / 1000;
+                    double run_time_milli = run_time / 1000000;
+
+                    expiriment_fout << "----Algorithm: " << getAlgoName(Sorting_Algorithms_ID) << endl;
+                    expiriment_fout << "       Runtime : " << fixed << setprecision(5) << run_time_micro <<" microsecs" << endl;
+                    expiriment_fout << "       Runtime : " << fixed << setprecision(5) << run_time_milli <<" millisecs"<< endl;
+                    expiriment_fout << "       Comparisons: " << NumComp << endl;
+
+                    expiriment_fout.flush();
+                    delete[] a;
+                }
+                delete[] data;
+            }
+            expiriment_fout << "------------------------------------------------------"<< endl;
+        }
+        expiriment_fout.close();
+    }
+    else
+        cout << "Unsuccessfully open file." << endl;
+    cout << "Complete the experiment!" << endl;
 }
