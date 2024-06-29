@@ -239,25 +239,48 @@ void MergeSort(int* a, int n, unsigned long long& NumComp)
 }
 
 //8.Quick Sort-------------------------------------------------------------------------------------------------//
-//This implementation of Heap Sort is refered in content 5 of "Introduction to the design and analysis of Algorithms" by Anany Levitin
-int Partition(int* a, int left, int right, unsigned long long& NumpComp) 
+///This implementation of Quick sort was referred in "Algorithms in a Nutshell: A Practical Guide" by George T. Heinemanitin
+int Sort_First_Middle_Last(int* a, int left, int right, unsigned long long& NumComp)
 {
-	int pivot = right;
-	right--;
-	int i = left;
-	while ((++NumpComp) && (left <= right))
+	int mid = left + (right - left) / 2;
+	if ((++NumComp) && (a[left] > a[mid]))
 	{
-		while ((++NumpComp) && (a[pivot] < a[right]) && (++NumpComp) && (left <= right))
+		swap(a[left], a[mid]);
+	}
+	if ((++NumComp) && (a[mid] > a[right]))
+	{
+		swap(a[mid], a[right]);
+	}
+	if ((++NumComp) && (a[left] > a[right]))
+	{
+		swap(a[left], a[right]);
+	}
+	return mid;
+}
+
+int Partition(int* a, int left, int right, unsigned long long& NumComp) 
+{
+	int pivot = Sort_First_Middle_Last(a, left, right, NumComp);
+	swap(a[pivot], a[right - 1]);
+	pivot = right - 1;
+
+	left++;
+	right = right - 2;
+
+	int i = left;
+	while ((++NumComp) && (left <= right))
+	{
+		while ((++NumComp) && (a[pivot] < a[right]) && (++NumComp) && (left <= right))
 		{
 			right--;
 		}
 
-		while ((++NumpComp) && (a[pivot] > a[left]) && (++NumpComp)&& (left <= right))
+		while ((++NumComp) && (a[pivot] > a[left]) && (++NumComp) && (left <= right))
 		{
 			left++;
 		}
 
-		if ((++NumpComp) && (left <= right))
+		if ((++NumComp) && (left <= right))
 		{
 			swap(a[right], a[left]);
 			left++;
@@ -268,20 +291,22 @@ int Partition(int* a, int left, int right, unsigned long long& NumpComp)
 	return left;
 }
 
-void QS_Recursion(int* a, int left, int right, unsigned long long& NumpComp)
+void QS_Recursion(int* a, int left, int right, unsigned long long& NumComp)
 {
-	if ((++NumpComp) && (right > left))
+	if ((++NumComp) && (right - left + 1 >= 10))
 	{
-		int Pivot = Partition(a, left, right, NumpComp);
-		QS_Recursion(a, left, Pivot - 1, NumpComp);
-		QS_Recursion(a, Pivot + 1, right, NumpComp);
+		int pivot = Partition(a, left, right, NumComp);
+		QS_Recursion(a, left, pivot - 1, NumComp);
+		QS_Recursion(a, pivot + 1, right, NumComp);
 	}
+	else
+		InsertionSort(a + left, right - left + 1, NumComp);
 }
 
-void QuickSort(int* a, int n, unsigned long long& NumpComp)
+void QuickSort(int* a, int n, unsigned long long& NumComp)
 {
-	NumpComp = 0;
-	QS_Recursion(a, 0, n - 1, NumpComp);
+	NumComp = 0;
+	Qs_recursion(a, 0, n - 1, NumComp);
 }
 
 //9.Counting Sort------------------------------------------------------------------------------------------------//
