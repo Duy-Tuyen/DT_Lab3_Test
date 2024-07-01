@@ -341,7 +341,7 @@ bool isMeantToBeInputSize(char* filename)
 
 bool isValidInputSize(int size)
 {
-	if ((size >= 1) && (size <= 5000000))
+	if ((size >= 1) && (size <= 1000000))
 	{
 		return true;
 	}
