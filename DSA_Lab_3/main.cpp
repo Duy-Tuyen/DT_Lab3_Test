@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    
+
 	if (argc < 2) {
 		cout << "Invalid input" << endl;
 		return 0;
@@ -30,14 +30,14 @@ int main(int argc, char** argv) {
 		}
 
 		string algo_name = argv[2];
-		if (!isValidAlgorithmName(argv[2])) {
+		if (!isAlgorithmName(argv[2])) {
 			cout << "Invalid algorithm name.\n" << endl;
 			return -1;
 		}
 
-		if (isMeantToBeGivenInputFile(argv[3])) {
+		if (isValidFilename(argv[3])) {
 			// If argv[3] = input file -> command 1
-			if (argc > 5 || !isMeantToBeOutputParam(argv[4])) {
+			if (argc > 5 || !isOutputParam(argv[4])) {
 				cout << "Unrecognized or incorrectly formatted arguments for command 1.\n"
 					<< "Expected format : <algorithm> <input_file> <output_param>\n" << endl;
 				return -1;
@@ -46,9 +46,15 @@ int main(int argc, char** argv) {
 			Command1(argv[2], argv[3], argv[4]);
 
 		}
-		else if (isMeantToBeInputSize(argv[3])) {
+		else if (isInputSize(argv[3])) {
 			// If argv[3] = input size -> command 2 or 3
-			if (isMeantToBeOutputParam(argv[4])) {
+
+			if (isValidInputSize(getSize(argv[3])) == false) {
+				cout << "Invalid input size for command 2 or 3.\n" << endl;
+				return -1;
+			}
+
+			if (isOutputParam(argv[4])) {
 				// If argv[4] = output param -> command 3; If not -> command 2
 				if (argc > 5) {
 					cout << "Unrecognized or incorrectly formatted arguments for command 3.\n"
@@ -59,7 +65,7 @@ int main(int argc, char** argv) {
 				Command3(argv[2], getSize(argv[3]), argv[4]);
 			}
 			else {
-				if (argc > 6 || !isMeantToBeInputOrder(argv[4]) || !isMeantToBeOutputParam(argv[5])) {
+				if (argc > 6 || !isInputOrder(argv[4]) || !isOutputParam(argv[5])) {
 					cout << "Unrecognized or incorrectly formatted arguments for command 2.\n"
 						<< "Expected format : <algorithm> <size> <input_order> <output_param>\n" << endl;
 					return -1;
@@ -85,17 +91,17 @@ int main(int argc, char** argv) {
 			return -1;
 		}
 
-		if (!isMeantToBeAlgorithmName(argv[2])) {
+		if (!isAlgorithmName(argv[2])) {
 			cout << "Invalid algorithm name for the 1st algorithm.\n" << endl;
 			return -1;
 		}
 
-		if (!isMeantToBeAlgorithmName(argv[3])) {
+		if (!isAlgorithmName(argv[3])) {
 			cout << "Invalid algorithm name for the 2nd algorithm.\n" << endl;
 			return -1;
 		}
 
-		if (isMeantToBeGivenInputFile(argv[4])) {
+		if (isValidFilename(argv[4])) {
 			// If argv[4] = input file -> command 4
 			if (argc > 5) {
 				cout << "Unrecognized or incorrectly formatted arguments for command 4.\n"
@@ -106,9 +112,14 @@ int main(int argc, char** argv) {
 			Command4(argv[2], argv[3], argv[4]);
 		}
 		else {
-			if (argc > 6 || !isMeantToBeInputSize(argv[4]) && !isMeantToBeInputOrder(argv[5])) {
+			if (argc > 6 || !isInputSize(argv[4]) && !isInputOrder(argv[5])) {
 				cout << "Unrecognized or incorrectly formatted arguments for command 5.\n"
 					<< "Expected format : <algorithm1> <algorithm2> <size> <input_order>\n" << endl;
+				return -1;
+			}
+
+			if (isValidInputSize(getSize(argv[4])) == false) {
+				cout << "Invalid input size for command 5.\n" << endl;
 				return -1;
 			}
 

@@ -223,7 +223,9 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 //-----------------------------------------------------------------------------------------------
 
 // 4. Functions to check for valid input/file
-bool isValidAlgorithmName(char* algorithm_name)
+// Check if the command line argument is a valid algorithm name
+
+bool isAlgorithmName(char* algorithm_name)
 {
 	if (strcmp(algorithm_name, "selection-sort") == 0)
 	{
@@ -273,20 +275,7 @@ bool isValidAlgorithmName(char* algorithm_name)
 	return false;
 }
 
-bool isMeantToBeAlgorithmName(char* algo_name)
-{
-	size_t name_length = strlen(algo_name);
-	size_t suffix_length = strlen("-sort");
-
-	if (name_length >= suffix_length && strcmp(algo_name + name_length - suffix_length, "-sort") == 0)
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool endingWithdotTxt(char* filename)
+bool endWithTxtSuffix(char* filename)
 {
 	const char* dotTxt = ".txt";
 	size_t filename_length = strlen(filename);
@@ -299,13 +288,11 @@ bool endingWithdotTxt(char* filename)
 
 	return false;
 }
-
-bool noIllegalCharacterInFileName(char* filename)
+bool hasNoIllegalChars(char* filename)
 {
 	const char* illegalCharacters = "<>:\"/\\|?*";
-	int length = strlen(filename);
 
-	for (int i = 0; i < length; i++)
+	for (int i = 0; i < (int)strlen(filename); i++)
 	{
 		if (strchr(illegalCharacters, filename[i]) != NULL)
 		{
@@ -315,30 +302,24 @@ bool noIllegalCharacterInFileName(char* filename)
 
 	return true;
 }
-
-bool isMeantToBeGivenInputFile(char* filename)
+bool isValidFilename(char* filename)
 {
-	return ((endingWithdotTxt(filename)) && (noIllegalCharacterInFileName(filename)));
+	return ((endWithTxtSuffix(filename)) && (hasNoIllegalChars(filename)));
 }
 
-bool isMeantToBeInputSize(char* filename)
-{
-	int len = strlen(filename);
-
-	if ((int(filename[0]) < 49) || (int(filename[0]) > 57))
-	{
+bool isInputSize(char* str) {
+	if (str == nullptr || *str == '\0') {
 		return false;
 	}
 
-	for (int i = 1; i < len; i++)
-	{
-		if ((int(filename[i]) < 48) || (int(filename[i]) > 57))
+	for (int i = 0; i < strlen(str); i++) {
+		if (!isdigit(str[i])) {
 			return false;
+		}
 	}
 
 	return true;
 }
-
 bool isValidInputSize(int size)
 {
 	if ((size >= 1) && (size <= 1000000))
@@ -351,9 +332,8 @@ bool isValidInputSize(int size)
 int getSize(char* input_size)
 {
 	int size = 0;
-	int len = strlen(input_size);
 
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i < (int)strlen(input_size); i++)
 	{
 		if (input_size[i] >= '0' && input_size[i] <= '9')
 		{
@@ -363,7 +343,8 @@ int getSize(char* input_size)
 
 	return size;
 }
-bool isMeantToBeOutputParam(char* output_param)
+
+bool isOutputParam(char* output_param)
 {
 	if (strcmp(output_param, "-time") == 0)
 	{
@@ -381,7 +362,7 @@ bool isMeantToBeOutputParam(char* output_param)
 	return false;
 }
 
-bool isMeantToBeInputOrder(char* input_order)
+bool isInputOrder(char* input_order)
 {
 	if (strcmp(input_order, "-rand") == 0)
 	{

@@ -52,13 +52,16 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 //-----------------------------------------------------------------------------------------------
 
 // 4. Functions to check for valid input/file
-bool isValidAlgorithmName(char* algorithm_name);
-bool isMeantToBeAlgorithmName(char* algo_name);
-bool endingWithdotTxt(char* filename);
-bool noIllegalCharacterInFileName(char* filename);
-bool isMeantToBeGivenInputFile(char* filename);
-bool isMeantToBeInputSize(char* filename);
+bool isAlgorithmName(char* algorithm_name);
+
+bool endWithTxtSuffix(char* filename);
+bool hasNoIllegalChars(char* filename);
+bool isValidFilename(char* filename);
+
+bool isInputSize(char* str);
 bool isValidInputSize(int size);
 int getSize(char* input_size);
-bool isMeantToBeOutputParam(char* output_param);
-bool isMeantToBeInputOrder(char* input_order);
+
+bool isOutputParam(char* output_param);
+
+bool isInputOrder(char* input_order);
