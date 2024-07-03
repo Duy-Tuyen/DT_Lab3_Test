@@ -33,11 +33,11 @@ void Command1(char* algo_name, char* input_filename, char* output_param)
             fread >> arr[count];
         }
 
-        clock_t start, end;
-        start = clock();
+        // Run and calculate the running time and/or the number of comparisons
+        auto start = std::chrono::high_resolution_clock::now();
         SORT_ALGO(arr, size, NumComp, algo_id);
-        end = clock();
-        double run_time = double(end - start) / double(CLOCKS_PER_SEC);
+        auto end = std::chrono::high_resolution_clock::now();
+        double run_time = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end - start).count();
 
         // Print out the running time and number of comparisons
 		printResult(run_time, NumComp, output_param);
@@ -73,12 +73,11 @@ void Command2(char* algo_name, int size, char* input_order, char* output_param)
 	GenerateData(arr, size, input_order_id);
 
 
-	// Run the sorting algorithm and measure the running time and number of comparisons
-	clock_t start, end;
-	start = clock();
-	SORT_ALGO(arr, size, NumComp, algo_id);
-	end = clock();
-	double run_time = double(end - start) / double(CLOCKS_PER_SEC);
+    // Run and calculate the running time and/or the number of comparisons
+    auto start = std::chrono::high_resolution_clock::now();
+    SORT_ALGO(arr, size, NumComp, algo_id);
+    auto end = std::chrono::high_resolution_clock::now();
+    double run_time = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end - start).count();
 
 	// Print out the running time and number of comparisons
 	printResult(run_time, NumComp, output_param);
@@ -108,11 +107,11 @@ void Command3(char* algo_name, int size, char* output_param) {
 	for (input_order_id = 0; input_order_id < 4; input_order_id++) {
 		GenerateData(arr, size, input_order_id);
 
-		clock_t start, end;
-		start = clock();
-		SORT_ALGO(arr, size, NumComp, algo_id);
-		end = clock();
-		double run_time = double(end - start) / double(CLOCKS_PER_SEC);
+        // Run and calculate the running time and/or the number of comparisons
+        auto start = std::chrono::high_resolution_clock::now();
+        SORT_ALGO(arr, size, NumComp, algo_id);
+        auto end = std::chrono::high_resolution_clock::now();
+        double run_time = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end - start).count();
 
 	// Print out the running time and number of comparisons
 		cout << "Input order: " << getInputOrder(input_order_id) << endl;
@@ -158,17 +157,16 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename)
         }
         arr2 = CopyData(arr2, size);
 
-        clock_t start1, end1, start2, end2;
-
-        start1 = clock();
+        // Run and calculate the running time and/or the number of comparisons
+        auto start1 = std::chrono::high_resolution_clock::now();
         SORT_ALGO(arr1, size, NumComp1, algo_id1);
-        end1 = clock();
-        double run_time1 = double(end1 - start1) / double(CLOCKS_PER_SEC);
+        auto end1 = std::chrono::high_resolution_clock::now();
+        double run_time1 = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end1 - start1).count();
 
-        start2 = clock();
+        auto start2 = std::chrono::high_resolution_clock::now();
         SORT_ALGO(arr2, size, NumComp2, algo_id2);
-        end2 = clock();
-        double run_time2 = double(end2 -start2)  / double(CLOCKS_PER_SEC);
+        auto end2 = std::chrono::high_resolution_clock::now();
+        double run_time2 = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - start2).count();
 
 		// Print out the running time and number of comparisons
         cout << "Running time: " << fixed << run_time1 / 1000 << setprecision(5) << " millisecs" << " | "
@@ -212,17 +210,16 @@ void Command5(char* algo1_name, char* algo2_name, int size, char* input_order)
 	GenerateData(arr1, size, input_order_id);
 	arr2 = CopyData(arr1, size);
 
-	clock_t start1, end1, start2, end2;
+    // Run and calculate the running time and/or the number of comparisons
+    auto start1 = std::chrono::high_resolution_clock::now();
+    SORT_ALGO(arr1, size, NumComp1, algo_id1);
+    auto end1 = std::chrono::high_resolution_clock::now();
+    double run_time1 = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end1 - start1).count();
 
-	start1 = clock();
-	SORT_ALGO(arr1, size, NumComp1, algo_id1);
-	end1 = clock();
-	double run_time1 = double(end1 - start1) / double(CLOCKS_PER_SEC);
-
-	start2 = clock();
-	SORT_ALGO(arr2, size, NumComp2, algo_id2);
-	end2 = clock();
-	double run_time2 = double(end2 - start2) / double(CLOCKS_PER_SEC);
+    auto start2 = std::chrono::high_resolution_clock::now();
+    SORT_ALGO(arr2, size, NumComp2, algo_id2);
+    auto end2 = std::chrono::high_resolution_clock::now();
+    double run_time2 = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - start2).count();
 
 
 	// Print out the running time and number of comparisons
@@ -238,47 +235,54 @@ void Command5(char* algo1_name, char* algo2_name, int size, char* input_order)
 	delete[] arr2;
 }
 
-void Experiment()
+void Experiment(char* input_order)
 {
     ofstream expiriment_fout;
     expiriment_fout.open("ExperimentResult.txt");
     if (expiriment_fout.is_open())
     {
-        for (int Data_Order = 0; Data_Order < 4; Data_Order++)
+        int Data_Order = getInputOrderId(input_order);
+
+        cout << "----DATA ORDER: " << getInputOrder(Data_Order) << endl << endl;
+        expiriment_fout << endl << "DATA ORDER : " << getInputOrder(Data_Order) << endl;
+
+        for (int Data_Size = 0; Data_Size < 6; Data_Size++)
         {
-            expiriment_fout << endl << "DATA ORDER : " << getInputOrder(Data_Order) << endl;
-		
-            for (int Data_Size = 0; Data_Size < 6; Data_Size++)
+            cout << "----DATA SIZE: " << SIZE[Data_Size] << endl << endl;
+
+            expiriment_fout << "----DATA SIZE: " << SIZE[Data_Size] << endl;
+
+            int* data = new int[SIZE[Data_Size]];
+            GenerateData(data, SIZE[Data_Size], Data_Order);
+
+            for (int Sorting_Algorithms_ID = 0; Sorting_Algorithms_ID < 11; Sorting_Algorithms_ID++)
             {
-                expiriment_fout << "----DATA SIZE: " << SIZE[Data_Size] << endl;
-                int* data = new int[SIZE[Data_Size]];
-                GenerateData(data, SIZE[Data_Size], Data_Order);
+                int* a = CopyData(data, SIZE[Data_Size]);
+                unsigned long long NumComp = 0;
 
-                for (int Sorting_Algorithms_ID = 0; Sorting_Algorithms_ID < 11; Sorting_Algorithms_ID++)
-                {
-                    int* a = CopyData(data, SIZE[Data_Size]);
-                    unsigned long long NumComp = 0;
+                auto start = std::chrono::high_resolution_clock::now();
+                SORT_ALGO(a, SIZE[Data_Size], NumComp, Sorting_Algorithms_ID);
+                auto end = std::chrono::high_resolution_clock::now();
 
-                    clock_t start, end;
-                    start = clock();
-                    SORT_ALGO(data, SIZE[Data_Size], NumComp, Sorting_Algorithms_ID);
-                    end = clock();
-                    double run_time = double(end - start) / double(CLOCKS_PER_SEC);
-                    double run_time_micro = run_time / 1000;
-                    double run_time_milli = run_time / 1000000;
+                double run_time = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end - start).count();
 
-                    expiriment_fout << "----Algorithm: " << getAlgoName(Sorting_Algorithms_ID) << endl;
-                    expiriment_fout << "       Runtime : " << fixed << setprecision(5) << run_time_micro <<" microsecs" << endl;
-                    expiriment_fout << "       Runtime : " << fixed << setprecision(5) << run_time_milli <<" millisecs"<< endl;
-                    expiriment_fout << "       Comparisons: " << NumComp << endl;
+                cout << "----Algorithm: " << getAlgoName(Sorting_Algorithms_ID) << endl;
+                printResult(run_time, NumComp, "both");
+                cout << endl;
 
-                    expiriment_fout.flush();
-                    delete[] a;
-                }
-                delete[] data;
+                expiriment_fout << "----Algorithm: " << getAlgoName(Sorting_Algorithms_ID) << endl;
+                expiriment_fout << "       Runtime : " << fixed << setprecision(5) << run_time << " millisecs" << endl;
+                expiriment_fout << "       Comparisons: " << NumComp << endl;
+
+                expiriment_fout.flush();
+                delete[] a;
             }
-            expiriment_fout << "------------------------------------------------------"<< endl;
+
+            cout << endl;
+            delete[] data;
         }
+        expiriment_fout << "------------------------------------------------------" << endl;
+
         expiriment_fout.close();
     }
     else

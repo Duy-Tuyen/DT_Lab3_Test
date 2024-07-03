@@ -61,6 +61,7 @@ void BubbleSort(int* a, int n, unsigned long long& NumComp)
 		}
 	}
 }
+
 void BubbleSort_Flag(int* a, int n, unsigned long long& NumComp)
 {
 	NumComp = 0;

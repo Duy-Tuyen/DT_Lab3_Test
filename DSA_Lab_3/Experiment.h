@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-//#include <chrono> we chose chrono library over time.h because it provides a high resolution clock which help measuring run time more accurate
+#include <chrono>
 #include <unordered_map> // use for function convert name -> id
 
 #include "Helper.h"
@@ -14,7 +14,7 @@
 
 
 using namespace std;
-const int SIZE[5] = {10000,30000,50000,100000, 500000};
+const int SIZE[6] = { 10000,30000,50000,100000, 300000, 500000 };
 
 // Command 1
 // Command line arguments: <algorithm> <input_file> <output_param>
@@ -46,4 +46,4 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename);
 // Result: Print both time and comparisons count of 2 algo to console and write the sorted array to "output.txt" file
 void Command5(char* algo1_name, char* algo2_name, int size, char* input_order);
 
-void Experiment();
+void Experiment(char* input_order);

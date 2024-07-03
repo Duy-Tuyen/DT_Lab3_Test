@@ -129,21 +129,20 @@ int main(int argc, char** argv) {
 	}
 	else if (mode == "-e") {
 		// Mode = -e -> EXPERIMENT MODE -> command -e
-		// Experiment command: Only -e
+		// Experiment command: <input_order>
 		cout << "EXPERIMENT MODE\n";
 
-		if (argc > 2) {
+		if (argc != 3 || !isInputOrder(argv[2])) {
 			cout << "Unrecognized or incorrectly formatted arguments for experiment mode command.\n"
-				<< "Expected format : -e\n" << endl;
+				<< "Expected format : <input_order>\n" << endl;
 			return -1;
 		}
 
-		Experiment();
+		Experiment(argv[2]);
 	}
 	else {
 		cout << "Invalid mode.\n" << endl;
 		return -1;
 	}
-
 	return 0;
 }
