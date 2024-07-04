@@ -169,8 +169,8 @@ void Command4(char* algo_name1, char* algo_name2, char* input_filename)
         double run_time2 = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end2 - start2).count();
 
 		// Print out the running time and number of comparisons
-        cout << "Running time: " << fixed << run_time1 / 1000 << setprecision(5) << " millisecs" << " | "
-			 << fixed << run_time2 / 1000 << setprecision(5) << " millisecs" << endl;
+        cout << "Running time: " << fixed << run_time1 << setprecision(5) << " millisecs" << " | "
+			 << fixed << run_time2 << setprecision(5) << " millisecs" << endl;
         cout << "Comparisons: " << NumComp1 << " | " << NumComp2 << endl;
 
 		// Write down the sorted array to "output.txt" file
@@ -223,8 +223,8 @@ void Command5(char* algo1_name, char* algo2_name, int size, char* input_order)
 
 
 	// Print out the running time and number of comparisons
-	cout << "Running time: " << fixed << run_time1 / 1000 << setprecision(5) << " millisecs" << " | "
-		 << fixed << run_time2 / 1000 << setprecision(5) << " millisecs" << endl;
+	cout << "Running time: " << fixed << run_time1 << setprecision(5) << " millisecs" << " | "
+		 << fixed << run_time2 << setprecision(5) << " millisecs" << endl;
 
 	cout << "Comparisons: " << NumComp1 << " | " << NumComp2 << endl;
 

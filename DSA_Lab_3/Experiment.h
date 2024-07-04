@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <chrono>
+#include <chrono> // use for time measurement, chrono is more accurate than time.h
 #include <unordered_map> // use for function convert name -> id
 
 #include "Helper.h"

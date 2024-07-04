@@ -5,7 +5,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-//#include <chrono> we chose chrono library over time.h because it provides a high resolution clock which help measuring run time more accurate
 #include <unordered_map> // use for function convert name -> id
 
 #include "Algorithms.h"
@@ -52,16 +51,23 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 //-----------------------------------------------------------------------------------------------
 
 // 4. Functions to check for valid input/file
+// Check if the command line argument is a valid algorithm name
 bool isAlgorithmName(char* algorithm_name);
 
+// Check if the command line argument is a valid input file
 bool endWithTxtSuffix(char* filename);
 bool hasNoIllegalChars(char* filename);
 bool isValidFilename(char* filename);
 
+// Check if the command line argument is a valid input size
 bool isInputSize(char* str);
 bool isValidInputSize(int size);
 int getSize(char* input_size);
 
+// Check if the command line argument is a valid output parameter
 bool isOutputParam(char* output_param);
 
+// Check if the command line argument is a valid input order
 bool isInputOrder(char* input_order);
+
+//-----------------------------------------------------------------------------------------------

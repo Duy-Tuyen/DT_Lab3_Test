@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
 		// Mode = -c -> EXPERIMENT MODE -> Command 4 or 5
 		// Command 4: <algorithm1> <algorithm2> <input_file>
 		// Command 5: <algorithm1> <algorithm2> <size> <input_order>
-		cout << "EXPERIMENT MODE\n";
+		cout << "COMPARISON MODE\n";
 
 		if (argc < 5) {
 			cout << "Parameters missing or formatted incorrectly.\n" << endl;
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
 			Command4(argv[2], argv[3], argv[4]);
 		}
 		else {
-			if (argc > 6 || !isInputSize(argv[4]) && !isInputOrder(argv[5])) {
+			if (argc != 6 || !isInputSize(argv[4]) && !isInputOrder(argv[5])) {
 				cout << "Unrecognized or incorrectly formatted arguments for command 5.\n"
 					<< "Expected format : <algorithm1> <algorithm2> <size> <input_order>\n" << endl;
 				return -1;

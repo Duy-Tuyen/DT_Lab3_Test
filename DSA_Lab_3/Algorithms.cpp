@@ -186,58 +186,60 @@ void HeapSort(int *a, int n, unsigned long long& NumComp)
 
 //7.Merge Sort-------------------------------------------------------------------------------------------------//
 //This implementation of Heap Sort is refered in content 5 of "Introduction to the design and analysis of Algorithms" by Anany Levitin
-void Merge(int* a, int first, int mid, int last, unsigned long long& NumComp)
-{
-	vector <int> temp(last + 1, 0);
-	int f1 = first;
-	int f2 = mid + 1;
-	int i = 0;
+void Merge(int* a, int* temp, int left, int mid, int right, unsigned long long& NumComp) {
+	int leftEnd = mid - 1;
+	int tempPos = left;
+	int numElements = right - left + 1;
 
-	while ((++NumComp) && (f1 <= mid) && (++NumComp) && (f2 <= last))
-	{
-		if ((++NumComp) && (a[f1] < a[f2]))
-		{
-			temp[i] = a[f1];
-			f1++;
+	int i = left;
+	int j = mid;
+
+	// Merge the two halves into temp array
+	while ((++NumComp) && i <= leftEnd && (++NumComp) && j <= right) {
+		if (a[i] <= a[j]) {
+			temp[tempPos++] = a[i++];
 		}
-		else
-		{
-			temp[i] = a[f2];
-			f2++;
+		else {
+			temp[tempPos++] = a[j++];
 		}
-		i++;
+		NumComp++;
 	}
 
-	while ((++NumComp) && (f1 <= mid))
-	{
-		temp[i++] = a[f1++];
-	}
-	while ((++NumComp) && (f2 <= last))
-	{
-		temp[i++] = a[f2++];
+	// Copy the rest of the left half
+	while ((++NumComp) && i <= leftEnd) {
+		temp[tempPos++] = a[i++];
+		NumComp++;
 	}
 
-	for (int j = 0; (++NumComp) && (j < i);j++)
-	{
-		a[j + first] = temp[j];
+	// Copy the rest of the right half
+	while ((++NumComp) && j <= right) {
+		temp[tempPos++] = a[j++];
+		NumComp++;
 	}
 
-}
-void SplitMS(int* a, int first, int last, unsigned long long& NumComp)
-{
-	if ((++NumComp) && first < last)
-	{
-		int mid = (first + last) / 2;
-		SplitMS(a, first, mid, NumComp);
-		SplitMS(a, mid + 1, last, NumComp);
-		Merge(a, first, mid, last, NumComp);
+	// Copy the merged result back to the original array
+	for (int i = 0; (++NumComp) && i < numElements; i++, right--) {
+		a[right] = temp[right];
+		NumComp++;
 	}
 }
-void MergeSort(int* a, int n, unsigned long long& NumComp)
-{
+
+void SplitMS(int* a, int* temp, int left, int right, unsigned long long& NumComp) {
+	if ((++NumComp) && left < right) {
+		int mid = (left + right) / 2;
+		SplitMS(a, temp, left, mid, NumComp);
+		SplitMS(a, temp, mid + 1, right, NumComp);
+		Merge(a, temp, left, mid + 1, right, NumComp);
+	}
+}
+
+void MergeSort(int* a, int n, unsigned long long& NumComp) {
 	NumComp = 0;
-	SplitMS(a, 0, n-1, NumComp);
+	int* temp = new int[n];
+	SplitMS(a, temp, 0, n - 1, NumComp);
+	delete[] temp;
 }
+
 
 //8.Quick Sort-------------------------------------------------------------------------------------------------//
 ///This implementation of Quick sort was referred in "Algorithms in a Nutshell: A Practical Guide" by George T. Heinemanitin

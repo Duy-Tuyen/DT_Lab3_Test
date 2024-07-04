@@ -1,45 +1,34 @@
 #include "Helper.h"
 
 //1. Function to implement sorting algorithms based on algo_id
+// Function type definition for sort functions
+typedef void (*SortFunc)(int*, int, unsigned long long&);
+
 void SORT_ALGO(int* a, int n, unsigned long long& num_Comp, int algo_id)
 {
-	switch (algo_id)
+	// Array of function pointers
+	SortFunc sortFuncs[] = {
+		SelectionSort,
+		InsertionSort,
+		BubbleSort,
+		ShakerSort,
+		ShellSort,
+		HeapSort,
+		MergeSort,
+		QuickSort,
+		CountingSort,
+		RadixSort,
+		FlashSort
+	};
+
+	// Number of sorting algorithms available
+	const int numAlgos = sizeof(sortFuncs) / sizeof(sortFuncs[0]);
+
+	// Check if algo_id is valid
+	if (algo_id >= 0 && algo_id < numAlgos)
 	{
-	case 0:
-		SelectionSort(a, n, num_Comp);
-		break;
-	case 1:
-		InsertionSort(a, n, num_Comp);
-		break;
-	case 2:
-		BubbleSort(a, n, num_Comp);
-		break;
-	case 3:
-		ShakerSort(a, n, num_Comp);
-		break;
-	case 4:
-		ShellSort(a, n, num_Comp);
-		break;
-	case 5:
-		HeapSort(a, n, num_Comp);
-		break;
-	case 6:
-		MergeSort(a, n, num_Comp);
-		break;
-	case 7:
-		QuickSort(a, n, num_Comp);
-		break;
-	case 8:
-		CountingSort(a, n, num_Comp);
-		break;
-	case 9:
-		RadixSort(a, n, num_Comp);
-		break;
-	case 10:
-		FlashSort(a, n, num_Comp);
-		break;
-	default:
-		break;
+		// Call the appropriate sorting function
+		sortFuncs[algo_id](a, n, num_Comp);
 	}
 }
 
@@ -224,7 +213,6 @@ void printResult(double run_time, unsigned long long NumComp, const char* output
 
 // 4. Functions to check for valid input/file
 // Check if the command line argument is a valid algorithm name
-
 bool isAlgorithmName(char* algorithm_name)
 {
 	if (strcmp(algorithm_name, "selection-sort") == 0)
@@ -275,6 +263,7 @@ bool isAlgorithmName(char* algorithm_name)
 	return false;
 }
 
+// Check if the command line argument is a valid input file
 bool endWithTxtSuffix(char* filename)
 {
 	const char* dotTxt = ".txt";
@@ -307,6 +296,7 @@ bool isValidFilename(char* filename)
 	return ((endWithTxtSuffix(filename)) && (hasNoIllegalChars(filename)));
 }
 
+// Check if the command line argument is a valid input size
 bool isInputSize(char* str) {
 	if (str == nullptr || *str == '\0') {
 		return false;
@@ -344,6 +334,7 @@ int getSize(char* input_size)
 	return size;
 }
 
+// Check if the command line argument is a valid output parameter
 bool isOutputParam(char* output_param)
 {
 	if (strcmp(output_param, "-time") == 0)
@@ -362,6 +353,7 @@ bool isOutputParam(char* output_param)
 	return false;
 }
 
+// Check if the command line argument is a valid input order
 bool isInputOrder(char* input_order)
 {
 	if (strcmp(input_order, "-rand") == 0)
@@ -383,3 +375,5 @@ bool isInputOrder(char* input_order)
 
 	return false;
 }
+
+//-----------------------------------------------------------------------------------------------
