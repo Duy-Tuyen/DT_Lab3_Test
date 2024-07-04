@@ -411,66 +411,61 @@ void RadixSort(int* a, int n, unsigned long long& NumComp)
 
 //11.Flash Sort------------------------------------------------------------------------------------------------//
 //This implementation is refered from:https://javascript.algorithmexamples.com/web/Sorts/flashSort.html
-void FlashSort(int* a, int n, unsigned long long& NumComp)
-{
+void FlashSort(int* a, int n, unsigned long long& NumComp) {
 	NumComp = 0;
-	int max = 0, min = 0;
-	int m = (int)floor(0.45 * n);
-	int move = 0;
-	int i = 0, k = 0;
-	vector <int> l(m);
+	int minVal = a[0], maxVal = a[0];
+	int m = n / 10;
 
-	for (i = 1;(++NumComp) && (i < n); i++)
-	{
-		if ((++NumComp) && (a[i] < min))
-			min = a[i];
-		if ((++NumComp) && (a[i] > max))
-			max = a[i];
+	for (int i = 1; ++NumComp && (i < n); i++) {
+		if (++NumComp && (a[i] < minVal)) {
+			minVal = a[i];
+		}
+		else if (++NumComp && (a[i] > maxVal)) {
+			maxVal = a[i];
+		}
 	}
 
-	if ((++NumComp) && (max == min))
-		return;
+	if (++NumComp && (maxVal == minVal)) return;
 
-	for (i = 0;(++NumComp) && (i < n); i++)
-	{
-		k = (int)floor(((m - 1) * (a[i] - min)) / (max - min));
-		++l[k];
+	if (++NumComp && (m <= 2)) m = 2;
+
+	int* classFreq = new int[m]();
+	for (int i = 0; ++NumComp && (i < n); i++) {
+		int k = 1ll * (m - 1) * (a[i] - minVal) / (maxVal - minVal);
+		classFreq[k]++;
 	}
 
-	for (i = 1;(++NumComp) && (i < m); i++) {
-		l[i] += l[i - 1];
-	}
+	for (int k = 1; ++NumComp && (k < m); k++) classFreq[k] += classFreq[k - 1];
 
-	i = 0;
-	while ((++NumComp) && (move < n - 1))
-	{
-		k = (int)floor(((m - 1) * (a[i] - min)) / (max - min));
-		while ((++NumComp) && (i >= l[k]))
-		{
+	int i = 0, count = 0, k = m - 1;
+	while (++NumComp && (count < n)) {
+		while (++NumComp && (i >= classFreq[k])) {
 			i++;
-			k = (int)floor(((m - 1) * (a[i] - min)) / (max - min));
+			k = 1ll * (m - 1) * (a[i] - minVal) / (maxVal - minVal);
 		}
 
-		int flash = i;
-		while ((++NumComp) && (i != l[k]))
-		{
-			k = (int)floor(((m - 1) * (a[i] - min)) / (max - min));
-			--l[k];
-			swap(a[flash], a[l[k]]);
-			move++;
+		int flash = a[i];
+		while (++NumComp && (i != classFreq[k])) {
+			k = 1ll * (m - 1) * (flash - minVal) / (maxVal - minVal);
+			swap(a[classFreq[k] - 1], flash);
+			classFreq[k]--;
+			count++;
 		}
 	}
-	
-	//insertiion sort
-	for (int i = 1;(++NumComp) && (i < n); i++)
-	{
-		int key = a[i];
-		int j = i - 1;
-		while ((++NumComp) && (i >= 0) && (++NumComp) && (a[j] > key))
-		{
-			a[j + 1] = a[j];
-			j--;
+
+	for (int k = 1; ++NumComp && (k < m); k++) {
+		int selected = 0, j = 0;
+		for (int i = classFreq[k - 1] + 1; ++NumComp && (i < classFreq[k]); i++) {
+			selected = a[i];
+			j = i - 1;
+			while (++NumComp && (j >= 0) && ++NumComp && (a[j] > selected)) {
+				a[j + 1] = a[j];
+				j--;
+			}
+			a[j + 1] = selected;
 		}
-		a[j + 1] = key;
 	}
+
+	delete[] classFreq;
+	return;
 }
